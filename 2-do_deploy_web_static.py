@@ -5,9 +5,9 @@ from fabric.api import *
 from os import path
 
 
-env.hosts = ['100.25.133.51', '3.83.227.219']
-env.user = 'ubuntu'
-env.key_filename = '~/.ssh/school'
+env.hosts = ['<IP web-01>', '<IP web-02>']
+env.user = '<username>'
+env.key_filename = '<path to SSH key>'
 
 
 def do_deploy(archive_path):
@@ -37,6 +37,7 @@ def do_deploy(archive_path):
         run("sudo ln -s /data/web_static/releases/{}/ /data/web_static/current"
             .format(archive_folder))
 
+        print("New version deployed!")
         return True
     except exception as e:
         return False
