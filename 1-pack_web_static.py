@@ -17,8 +17,7 @@ def do_pack():
             local("du -b {} | awk '{{print $1}}'"
                   .format(archive_path), capture=True)
         )
-        print("web_static packed: {} -> {} \
-        Bytes".format(archive_path, size.strip()))
+        print(f"web_static packed: {archive_path} -> {size.strip()}Bytes")
         return archive_path
     else:
         return None
