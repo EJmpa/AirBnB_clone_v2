@@ -1,16 +1,19 @@
 #!/usr/bin/python3
 from fabric.api import local
-from time import strftime
 from datetime import datetime
 
 
 def do_pack():
     """Generates a .tgz archive from the contents of the web_static folder"""
-    timestamp = strftime("%Y%m%d%H%M%S")
+    now = datetime.now()
+    timestamp = now.strftime("%Y%m%d%H%M%S")
     archive_name = "web_static_" + timestamp + ".tgz"
+    archive_path = "versions/{}".format(archive_name)
     local("mkdir -p versions")
-    result = local("tar -czvf versions/{} web_static".format(archive_name))
+    result = local("tar -cvzf {} web_static".format(archive_path))
     if result.succeeded:
-        return "versions/{}".format(archive_name)
+        size = local("stat -c %s {}".format(archive_path), capture=True)
+        print("web_static packed: {} -> {}Bytes".format(archive_path, size))
+        return archive_path
     else:
         return None
