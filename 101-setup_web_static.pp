@@ -1,5 +1,3 @@
-# nginx_config.erb
-
 $nginx_config = "server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -15,13 +13,10 @@ $nginx_config = "server {
     }
     error_page 404 /404.html;
     location /404 {
-      root /var/www/html;
-      internal;
+        root /var/www/html;
+        internal;
     }
 }"
-
-
-# web_server_setup.pp
 
 package { 'nginx':
   ensure => installed,
@@ -34,24 +29,28 @@ file { '/data':
   recurse => true,
 }
 
-exec { 'chown -R ubuntu:ubuntu /data/':
-  path => '/usr/bin/:/usr/local/bin/:/bin/'
-}
-
 file { '/data/web_static':
   ensure => directory,
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
 }
 
 file { '/data/web_static/releases':
   ensure => directory,
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
 }
 
 file { '/data/web_static/shared':
   ensure => directory,
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
 }
 
 file { '/data/web_static/releases/test':
   ensure => directory,
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
 }
 
 file { '/data/web_static/releases/test/index.html':
@@ -62,22 +61,27 @@ file { '/data/web_static/releases/test/index.html':
     Holberton School
   </body>
 </html>',
+  owner   => 'ubuntu',
+  group   => 'ubuntu',
 }
 
 file { '/data/web_static/current':
   ensure => link,
   target => '/data/web_static/releases/test',
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
 }
 
 file { '/etc/nginx/sites-available/default':
-  ensure => present,
+  ensure  => present,
   content => $nginx_config,
-  notify => Service['nginx'],
+  owner   => 'root',
+  group   => 'root',
+  notify  => Service['nginx'],
 }
 
 service { 'nginx':
-  ensure => running,
-  enable => true,
+  ensure  => running,
+  enable  => true,
   require => File['/etc/nginx/sites-available/default'],
 }
-
