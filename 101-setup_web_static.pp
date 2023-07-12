@@ -34,6 +34,10 @@ file { '/data':
   recurse => true,
 }
 
+exec { 'chown -R ubuntu:ubuntu /data/':
+  path => '/usr/bin/:/usr/local/bin/:/bin/'
+}
+
 file { '/data/web_static':
   ensure => directory,
 }
