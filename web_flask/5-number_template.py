@@ -64,7 +64,7 @@ def number_template(n):
     The HTML page contains an H1 tag with the content "Number: n".
     """
     if isinstance(n, int):
-        return render_template('templates/5-number.html', n=n)
+        return render_template('5-number.html', n=n)
 
 
 if __name__ == "__main__":
