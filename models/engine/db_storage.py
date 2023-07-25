@@ -89,3 +89,8 @@ class DBStorage:
         )
         Session = scoped_session(session_factory)
         self.__session = Session()
+
+    def close(self):
+        """Dispose of current session if active"""
+        self.__session.remove()
+        
