@@ -21,7 +21,7 @@ def states_list():
 
 
 @app.teardown_appcontext
-def teardown(exception):
+def teardown(self):
     """
     This method is called after each request and
     closes the current SQLAlchemy Session.
