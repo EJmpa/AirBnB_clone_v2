@@ -16,7 +16,7 @@ def states_list():
     This function defines the route '/states_list'
     and displays a list of states.
     """
-    states = storage.all(State).values()
+    states = storage.all()
     return render_template('7-states_list.html', states=states)
 
 
