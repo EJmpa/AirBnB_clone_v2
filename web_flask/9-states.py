@@ -26,10 +26,10 @@ def cities_by_state(id):
     This function defines the route '/states/<id>'
     and displays a list of cities linked to the state with the given id.
     """
-    state = storage.get(State, id)
-    if state is None:
-        return render_template('9-states.html', mode='not_found', states=state)
-    return render_template('9-states.html', mode='id', states=state)
+    for state in storage.all(State).values():
+        if state.id == id:
+            return render_template('9-states.html', states=state, mode='id')
+    return render_template('9-states.html', states=state, mode='none')
 
 
 @app.teardown_appcontext
